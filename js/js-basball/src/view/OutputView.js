@@ -1,15 +1,14 @@
 const { Console } = require('@woowacourse/mission-utils');
 const { BASEBALL } = require('../utils/const');
-const { OUTPUT_MESSAGE } = require('../utils/messages');
+const { OUTPUT_MESSAGE, NEW_LINE } = require('../utils/messages');
 
 const OutputView = {
   printNewLine() {
-    Console.print(OUTPUT_MESSAGE.NEW_LINE);
+    Console.print(NEW_LINE);
   },
 
   printStartGame() {
     Console.print(OUTPUT_MESSAGE.START);
-    this.printNewLine();
   },
 
   /**
@@ -17,12 +16,12 @@ const OutputView = {
    * @param {number} ballCount
    * @param {number} strikeCount
    */
-  printGuessResult(ballCount, strikeCount) {
-    let resultMessage = '';
-    if (ballCount !== 0) resultMessage += `${ballCount}${BASEBALL.BAll} `;
-    if (strikeCount !== 0) resultMessage += `${strikeCount}${BASEBALL.STRIKE}`;
+  printResult(ballCount, strikeCount) {
+    let result = '';
+    if (ballCount !== 0) result += `${ballCount}${BASEBALL.BAll} `;
+    if (strikeCount !== 0) result += `${strikeCount}${BASEBALL.STRIKE}`;
 
-    Console.print(resultMessage.trim());
+    Console.print(!!result ? result.trim() : BASEBALL.NOTHING);
   },
 
   printQuitGame() {
