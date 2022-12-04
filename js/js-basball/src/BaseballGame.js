@@ -1,12 +1,12 @@
-const { GAME_RESULT, GAME, MAX_NUMBERS_LENGTH } = require('./utils/const');
+const { GAME, MAX_NUMBERS_LENGTH } = require('./utils/const');
 const Validator = require('./utils/Validator');
 const { readNumbers, readCommand } = require('./View/InputView');
 const { printStartGame, printResult } = require('./View/OutputView');
-const WinningNumbers = require('./WinningNumbers');
 const { Console } = require('@woowacourse/mission-utils');
+const Converter = require('./utils/Converter.');
 
 class BaseballGame {
-  #winningNumbers;
+  #baseballGameManager;
 
   play() {
     printStartGame();
@@ -14,30 +14,24 @@ class BaseballGame {
   }
 
   startGame() {
-    this.#winningNumbers = new WinningNumbers();
+    this.#baseballGameManager = new BaseballGameManager();
     this.continueGame();
   }
 
   continueGame() {
     readNumbers((numbers) => {
-      this.validate();
-      const validNumbers = this.convertStringToNumbers(numbers);
-      const result = this.recordNumbers(validNumbers);
+      this.validateNumbers(numbers);
+      const convertedNumbers = Converter.convertStringToNumbers(numbers);
+      const result = this.#baseballGameManager.recordResult(convertedNumbers);
       printResult(result.ball, result.strike);
 
       result.strike === 3 ? this.askRestart() : this.continueGame();
     });
   }
 
-  validate() {
-    Validator.validateNumber(numbers);
-    Validator.validateDuplicate(numbers);
-    Validator.validateBound(numbers, MAX_NUMBERS_LENGTH);
-  }
-
   askRestart() {
     readCommand((command) => {
-      Validator.validateCommand(command);
+      this.validateCommand(command);
       command === GAME.RESTART ? this.startGame() : this.quitGame();
     });
   }
@@ -46,26 +40,14 @@ class BaseballGame {
     Console.close();
   }
 
-  /**
-   * string을 digits 배열로 변환하는 함수
-   * @param {string} str
-   */
-  convertStringToNumbers(str) {
-    return [...str].map((char) => Number(char));
+  validateNumbers(numbers) {
+    Validator.validateNumber(numbers);
+    Validator.validateDuplicate(numbers);
+    Validator.validateBound(numbers, MAX_NUMBERS_LENGTH);
   }
 
-  /**
-   *
-   * @param {*} numbers
-   */
-  recordNumbers(numbers) {
-    const result = { strike: 0, ball: 0 };
-    numbers.forEach((number, index) => {
-      const status = this.#winningNumbers.compare(number, index);
-      const resultKey = GAME_RESULT[status];
-      result[resultKey] += 1;
-    });
-    return result;
+  validateCommand(command) {
+    Validator.validateCommand(command);
   }
 }
 
