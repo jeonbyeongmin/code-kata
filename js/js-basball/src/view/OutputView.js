@@ -3,12 +3,13 @@ const { BASEBALL } = require('../utils/const');
 const { OUTPUT_MESSAGE } = require('../utils/messages');
 
 const OutputView = {
-  printNewLink() {
+  printNewLine() {
     Console.print(OUTPUT_MESSAGE.NEW_LINE);
   },
 
   printStartGame() {
     Console.print(OUTPUT_MESSAGE.START);
+    this.printNewLine();
   },
 
   /**
