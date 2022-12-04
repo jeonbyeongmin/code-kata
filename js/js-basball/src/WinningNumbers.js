@@ -13,16 +13,24 @@ class WinningNumbers {
       const number = BaseballRandomNumberGenerator.generate();
       if (!numbers.includes(number)) numbers.push(number);
     }
+
     return numbers;
   }
 
   /**
-   * 유저의 숫자와 정답 숫자를 비교하여 스트라이크와 볼의 개수를 세고 이를 반환한다.
-   * @param {number[]} numbers
-   * @return {{strike: number, ball: number}}
+   * 유저의 숫자와 정답 숫자를 비교하여 스트라이크면 1, 볼이면 2, 아무것도 아니면 0을 반환한다.
+   * @param {number} number
+   * @param {number} index
+   * @return {0 | 1 | 2}
    */
-  compare(numbers) {
-    return;
+  compare(number, index) {
+    if (this.#winningNumbers[index] === number) return 1;
+    if (this.#winningNumbers.includes(number)) return 2;
+    return 0;
+  }
+
+  getWinningNumbers() {
+    return this.#winningNumbers;
   }
 }
 

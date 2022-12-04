@@ -1,5 +1,5 @@
 const { Console } = require('@woowacourse/mission-utils');
-const { INPUT_MESSAGE } = require('../utils/messages');
+const { INPUT_MESSAGE, NEW_LINE } = require('../utils/messages');
 
 const InputView = {
   readNumbers(callback) {
@@ -12,7 +12,7 @@ const InputView = {
 
   readCommand(callback) {
     try {
-      Console.readLine(INPUT_MESSAGE.COMMAND, callback);
+      Console.readLine(INPUT_MESSAGE.COMMAND + NEW_LINE, callback);
     } catch (error) {
       Console.close();
     }
