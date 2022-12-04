@@ -28,10 +28,6 @@ class WinningNumbers {
     if (this.#winningNumbers.includes(number)) return 2;
     return 0;
   }
-
-  getWinningNumbers() {
-    return this.#winningNumbers;
-  }
 }
 
 module.exports = WinningNumbers;
