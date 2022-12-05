@@ -16,7 +16,7 @@ class BaseballGameManager {
     const result = { strike: 0, ball: 0 };
     statuses.forEach((status) => {
       const resultKey = GAME_RESULT[status];
-      result[resultKey] += 1;
+      if (resultKey !== 'nothing') result[resultKey] += 1;
     });
     return result;
   }
