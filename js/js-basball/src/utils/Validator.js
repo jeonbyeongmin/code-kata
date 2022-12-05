@@ -1,4 +1,4 @@
-const Converter = require('./Converter.');
+const Converter = require('./Converter');
 const { ERROR_MESSAGE } = require('./messages');
 
 const Validator = {

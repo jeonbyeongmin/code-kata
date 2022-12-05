@@ -12,7 +12,7 @@ const {
 } = require('./utils/const');
 const { Console } = require('@woowacourse/mission-utils');
 const Validator = require('./utils/Validator');
-const Converter = require('./utils/Converter.');
+const Converter = require('./utils/Converter');
 const BaseballGameManager = require('./BaseballGameManager');
 
 class BaseballGame {
