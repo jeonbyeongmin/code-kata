@@ -9,17 +9,30 @@ class BaseballGameManager {
   }
 
   /**
-   * 유저 숫자들을 정답 숫자와 비교하여 결과값을 기록하는 메서드
-   * @param {*} numbers
+   * 결과값을 기록하는 메서드
+   * @param {number[]} statuses
    */
-  recordResult(numbers) {
+  recordResult(statuses) {
     const result = { strike: 0, ball: 0 };
-    numbers.forEach((number, index) => {
-      const status = this.#winningNumbers.compare(number, index);
+    statuses.forEach((status) => {
       const resultKey = GAME_RESULT[status];
       result[resultKey] += 1;
     });
     return result;
+  }
+
+  /**
+   * 유저 숫자를 비교하는 메서드
+   * @param {number[]} numbers
+   * @returns
+   */
+  compareNumbers(numbers) {
+    const statuses = [];
+    numbers.forEach((number, index) => {
+      const status = this.#winningNumbers.compare(number, index);
+      statuses.push(status);
+    });
+    return statuses;
   }
 }
 

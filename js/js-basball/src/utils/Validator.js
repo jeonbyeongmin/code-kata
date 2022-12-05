@@ -1,3 +1,4 @@
+const Converter = require('./Converter.');
 const { ERROR_MESSAGE } = require('./messages');
 
 const Validator = {
@@ -26,10 +27,25 @@ const Validator = {
    * @param {string} str
    * @param {number} maxLength
    */
-  validateBound(str, maxLength) {
-    if (str.length > maxLength) {
-      throw new Error(ERROR_MESSAGE.OVER_MAX(maxLength));
+  validateLength(str, maxLength) {
+    if (str.length !== maxLength) {
+      throw new Error(ERROR_MESSAGE.LENGTH(maxLength));
     }
+  },
+
+  /**
+   * 각 digits이 min, max를 충족하는지 검증
+   * @param {string} str
+   * @param {number} min
+   * @param {number} max
+   */
+  validateBound(str, min, max) {
+    const numbers = Converter.convertStringToNumbers(str);
+    numbers.forEach((number) => {
+      if (number < min || number > max) {
+        throw new Error(ERROR_MESSAGE.BOUND);
+      }
+    });
   },
 
   /**
