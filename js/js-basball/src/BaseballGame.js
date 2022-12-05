@@ -1,12 +1,16 @@
 const { readNumbers, readCommand } = require('./View/InputView');
-const { printStartGame, printResult } = require('./View/OutputView');
-const { Console } = require('@woowacourse/mission-utils');
+const {
+  printStartGame,
+  printResult,
+  printQuitGame,
+} = require('./View/OutputView');
 const {
   GAME,
   NUMBERS_LENGTH,
   MIN_NUMBER,
   MAX_NUMBER,
 } = require('./utils/const');
+const { Console } = require('@woowacourse/mission-utils');
 const Validator = require('./utils/Validator');
 const Converter = require('./utils/Converter.');
 const BaseballGameManager = require('./BaseballGameManager');
@@ -37,6 +41,7 @@ class BaseballGame {
   }
 
   askRestart() {
+    printQuitGame();
     readCommand((command) => {
       this.validateCommand(command);
       command === GAME.RESTART ? this.startGame() : this.quitGame();
