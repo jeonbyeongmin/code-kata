@@ -1,9 +1,15 @@
-const { GAME, MAX_NUMBERS_LENGTH } = require('./utils/const');
-const Validator = require('./utils/Validator');
 const { readNumbers, readCommand } = require('./View/InputView');
 const { printStartGame, printResult } = require('./View/OutputView');
 const { Console } = require('@woowacourse/mission-utils');
+const {
+  GAME,
+  NUMBERS_LENGTH,
+  MIN_NUMBER,
+  MAX_NUMBER,
+} = require('./utils/const');
+const Validator = require('./utils/Validator');
 const Converter = require('./utils/Converter.');
+const BaseballGameManager = require('./BaseballGameManager');
 
 class BaseballGame {
   #baseballGameManager;
@@ -21,8 +27,9 @@ class BaseballGame {
   continueGame() {
     readNumbers((numbers) => {
       this.validateNumbers(numbers);
-      const convertedNumbers = Converter.convertStringToNumbers(numbers);
-      const result = this.#baseballGameManager.recordResult(convertedNumbers);
+      const convertedNum = Converter.convertStringToNumbers(numbers);
+      const statuses = this.#baseballGameManager.compareNumbers(convertedNum);
+      const result = this.#baseballGameManager.recordResult(statuses);
       printResult(result.ball, result.strike);
 
       result.strike === 3 ? this.askRestart() : this.continueGame();
@@ -40,12 +47,19 @@ class BaseballGame {
     Console.close();
   }
 
+  /**
+   * @param {string} numbers
+   */
   validateNumbers(numbers) {
     Validator.validateNumber(numbers);
     Validator.validateDuplicate(numbers);
-    Validator.validateBound(numbers, MAX_NUMBERS_LENGTH);
+    Validator.validateBound(numbers, MIN_NUMBER, MAX_NUMBER);
+    Validator.validateLength(numbers, NUMBERS_LENGTH);
   }
 
+  /**
+   * @param {string} command
+   */
   validateCommand(command) {
     Validator.validateCommand(command);
   }

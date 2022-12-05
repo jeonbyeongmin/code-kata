@@ -1,3 +1,5 @@
+const { MIN_NUMBER, MAX_NUMBER } = require('./const');
+
 const NEW_LINE = '\n';
 
 const OUTPUT_MESSAGE = {
@@ -14,7 +16,8 @@ const ERROR_MESSAGE = {
   NAN: '숫자를 입력해주세요',
   DUPLICATE: '중복되는 숫자는 입력할 수 없습니다.',
   INVALID_COMMAND: '1 혹은 2를 입력해주세요.',
-  OVER_MAX: (maxLength) => `문자열의 길이는 ${maxLength}을 넘을 수 없습니다.`,
+  BOUND: `${MIN_NUMBER}~${MAX_NUMBER} 사이의 숫자를 입력해주세요.`,
+  LENGTH: (maxLength) => `문자열의 길이는 ${maxLength}이어야 합니다.`,
 };
 
 module.exports = {

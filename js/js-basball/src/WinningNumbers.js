@@ -24,9 +24,17 @@ class WinningNumbers {
    * @return {0 | 1 | 2}
    */
   compare(number, index) {
-    if (this.#winningNumbers[index] === number) return 1;
-    if (this.#winningNumbers.includes(number)) return 2;
+    if (this.isStrike(number, this.#winningNumbers[index])) return 1;
+    if (this.isBall(number, this.#winningNumbers)) return 2;
     return 0;
+  }
+
+  isStrike(number, winningNumber) {
+    return number === winningNumber;
+  }
+
+  isBall(number, winningNumbers) {
+    return winningNumbers.includes(number);
   }
 }
 

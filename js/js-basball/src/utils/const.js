@@ -1,4 +1,6 @@
-const MAX_NUMBERS_LENGTH = 3;
+const NUMBERS_LENGTH = 3;
+const MIN_NUMBER = 1;
+const MAX_NUMBER = 9;
 
 const BASEBALL = {
   NOTHING: '낫싱',
@@ -13,4 +15,11 @@ const GAME = {
   QUIT: '2',
 };
 
-module.exports = { MAX_NUMBERS_LENGTH, BASEBALL, GAME_RESULT, GAME };
+module.exports = {
+  NUMBERS_LENGTH,
+  MIN_NUMBER,
+  MAX_NUMBER,
+  BASEBALL,
+  GAME_RESULT,
+  GAME,
+};
