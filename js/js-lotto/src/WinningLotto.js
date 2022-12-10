@@ -3,7 +3,7 @@ class WinningLotto {
   #bonusNumber;
 
   /**
-   * @param {number[]} lotto
+   * @param {Lotto[]} lotto
    * @param {number} bonusNumber
    */
   constructor(lotto, bonusNumber) {
@@ -11,12 +11,24 @@ class WinningLotto {
     this.#bonusNumber = bonusNumber;
   }
 
+  /**
+   * 보너스 숫자 검증
+   */
+  validateBonus() {}
+
   getBonusNumber() {
     return this.#bonusNumber;
   }
 
   getLotto() {
     return this.#lotto;
+  }
+
+  getWinningLotto() {
+    return {
+      winningNumbers: this.getLotto(),
+      bonusNumber: this.getBonusNumber(),
+    };
   }
 }
 

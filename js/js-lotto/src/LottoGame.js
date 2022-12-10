@@ -22,16 +22,16 @@ class LottoGame {
   }
 
   start() {
-    this.publishLottos();
+    this.purchaseLottos();
   }
 
-  publishLottos() {
+  purchaseLottos() {
     readPrice((price) => {
       this.#price = price;
       const count = this.#price / LOTTO_PRICE;
       printPurchaseCount(count);
 
-      const lottos = this.purchaseLottos(count);
+      const lottos = this.publishLottos(count);
       this.printLottos(lottos);
       this.publishWinningLotto(lottos);
     });
@@ -64,15 +64,14 @@ class LottoGame {
 
   matchLottos(lottos, winning) {
     lottos.forEach((lotto) => {
-      const winningLotto = winning.getLotto();
-      const bonus = winning.getBonusNumber();
-      const matchedCount = lotto.matchCount(winningLotto);
+      const { winningNumbers, bonus } = winning.getWinningLotto();
+      const matchedCount = lotto.matchCount(winningNumbers);
       const isBonusCorrect = lotto.contains(bonus);
       this.#lottoResult.countPrize(matchedCount, isBonusCorrect);
     });
   }
 
-  purchaseLottos(count) {
+  publishLottos(count) {
     const lottos = [];
     for (let i = 0; i < count; i++) {
       const lotto = this.#lottoMachine.makeLotto();
