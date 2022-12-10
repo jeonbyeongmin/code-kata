@@ -2,11 +2,15 @@ const { Console } = require('@woowacourse/mission-utils');
 const { OUTPUT_MESSAGE } = require('../utils/messages');
 
 const OutputView = {
+  printNewLine() {
+    Console.print('');
+  },
   /**
    * 구입금액에 따른 로또 구매 개수를 출력한다
    * @param {number} count
    */
   printPurchaseCount(count) {
+    OutputView.printNewLine();
     Console.print(OUTPUT_MESSAGE.PURCHASE_COUNT(count));
   },
 
@@ -20,10 +24,10 @@ const OutputView = {
 
   /**
    * 당첨 통계를 출력한다
-   * @param {number[]} stats
    */
-  printStats(stats) {
-    const [fifth, fourth, third, second, first] = stats;
+  printStats(result) {
+    OutputView.printNewLine();
+    const { fifth, fourth, third, second, first } = result;
     Console.print(OUTPUT_MESSAGE.STATS);
     Console.print(OUTPUT_MESSAGE.DIVIDER);
     Console.print(OUTPUT_MESSAGE.FIFTH(fifth));
