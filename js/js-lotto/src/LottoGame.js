@@ -8,6 +8,7 @@ const {
   printStats,
   printRate,
 } = require('./view/OutputView');
+const { validatePrice } = require('./utils/Validator');
 
 const LOTTO_PRICE = 1000;
 
@@ -27,7 +28,8 @@ class LottoGame {
 
   purchaseLottos() {
     readPrice((price) => {
-      this.#price = price;
+      validatePrice(price);
+      this.#price = Number(price);
       const count = this.#price / LOTTO_PRICE;
       printPurchaseCount(count);
 
