@@ -1,3 +1,7 @@
+const { LOTTO } = require('./utils/const');
+const { validateLength } = require('./utils/Validator');
+
+const LOTTO_LENGTH = 6;
 class Lotto {
   #numbers;
 
@@ -9,10 +13,14 @@ class Lotto {
     this.#numbers = numbers.sort((a, b) => a - b);
   }
 
+  /**
+   * @param {number[]} numbers
+   */
   validate(numbers) {
-    if (numbers.length !== 6) {
-      throw new Error();
-    }
+    validateLength(numbers, LOTTO_LENGTH);
+    numbers.forEach((number) => {
+      validateBound(number, LOTTO.MIN, LOTTO.MAX);
+    });
   }
 
   /**

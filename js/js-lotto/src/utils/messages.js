@@ -20,6 +20,10 @@ const OUTPUT_MESSAGE = {
 
 const ERROR_MESSAGE = {
   BOUND: '[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.',
+  NAN: '[ERROR] 숫자를 입력해야 합니다.',
+  PRICE: '[ERROR] 가격은 1000원 단위만 입력할 수 있습니다.',
+  LENGTH: '[ERROR] 배열의 길이가 6이어여야 합니다.',
+  DUPLICATE: '[ERROR] 로또 숫자는 중복될 수 없습니다.',
 };
 
 module.exports = {
