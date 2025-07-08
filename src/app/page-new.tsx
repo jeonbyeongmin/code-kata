@@ -18,40 +18,39 @@ export default function Home() {
   const [isGeneratingProblem, setIsGeneratingProblem] = useState(false);
 
   useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        const progress = LocalStorageService.getUserProgress();
-
-        if (!progress) {
-          // New user - show language selection
-          setAppState("language-selection");
-          return;
-        }
-
-        setUserProgress(progress);
-
-        // Check if we need a new problem
-        if (LocalStorageService.shouldGenerateNewProblem()) {
-          await generateNewProblem(progress);
-        } else {
-          // Load existing problem
-          const problem = LocalStorageService.getCurrentProblem();
-          if (problem) {
-            setCurrentProblem(problem);
-            setAppState("coding");
-          } else {
-            await generateNewProblem(progress);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to initialize app:", error);
-        setAppState("language-selection");
-      }
-    };
-
     initializeApp();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const initializeApp = async () => {
+    try {
+      const progress = LocalStorageService.getUserProgress();
+
+      if (!progress) {
+        // New user - show language selection
+        setAppState("language-selection");
+        return;
+      }
+
+      setUserProgress(progress);
+
+      // Check if we need a new problem
+      if (LocalStorageService.shouldGenerateNewProblem()) {
+        await generateNewProblem(progress);
+      } else {
+        // Load existing problem
+        const problem = LocalStorageService.getCurrentProblem();
+        if (problem) {
+          setCurrentProblem(problem);
+          setAppState("coding");
+        } else {
+          await generateNewProblem(progress);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to initialize app:", error);
+      setAppState("language-selection");
+    }
+  };
 
   const generateNewProblem = async (progress: UserProgress) => {
     setIsGeneratingProblem(true);
@@ -121,81 +120,16 @@ export default function Home() {
           { input: [10, -5], expected: 5 },
         ],
       },
-      2: {
-        title: "Is Even",
-        description:
-          "Write a function that checks if a number is even.\n\nExample:\n- Input: 4\n- Output: true\n- Input: 3\n- Output: false",
-        signature:
-          language === "rust"
-            ? "fn solution(n: i32) -> bool"
-            : language === "python"
-            ? "def solution(n):"
-            : "function solution(n)",
-        tests: [
-          { input: 2, expected: true },
-          { input: 3, expected: false },
-          { input: 0, expected: true },
-          { input: -4, expected: true },
-          { input: -3, expected: false },
-        ],
-      },
-      3: {
-        title: "Maximum of Three",
-        description:
-          "Write a function that returns the maximum of three numbers.\n\nExample:\n- Input: 1, 5, 3\n- Output: 5",
-        signature:
-          language === "rust"
-            ? "fn solution(a: i32, b: i32, c: i32) -> i32"
-            : language === "python"
-            ? "def solution(a, b, c):"
-            : "function solution(a, b, c)",
-        tests: [
-          { input: [1, 5, 3], expected: 5 },
-          { input: [10, 2, 8], expected: 10 },
-          { input: [-1, -5, -3], expected: -1 },
-          { input: [7, 7, 7], expected: 7 },
-        ],
-      },
-      4: {
-        title: "Count Characters",
-        description:
-          'Write a function that counts the number of characters in a string.\n\nExample:\n- Input: "hello"\n- Output: 5',
-        signature:
-          language === "rust"
-            ? "fn solution(s: &str) -> usize"
-            : language === "python"
-            ? "def solution(s):"
-            : "function solution(s)",
-        tests: [
-          { input: "hello", expected: 5 },
-          { input: "", expected: 0 },
-          { input: "a", expected: 1 },
-          { input: "hello world", expected: 11 },
-        ],
-      },
     };
 
-    const problemData =
-      problems[day as keyof typeof problems] ||
-      problems[(day % 5) as keyof typeof problems];
+    const problemData = problems[day as keyof typeof problems] || problems[0];
 
     return {
       id: `fallback_day_${day}`,
       day,
       language,
       ...problemData,
-      starterCode:
-        language === "javascript"
-          ? `function solution(${
-              problemData.signature.includes(",")
-                ? problemData.signature.match(/\(([^)]+)\)/)?.[1] || ""
-                : problemData.signature.includes("(")
-                ? problemData.signature.match(/\(([^)]*)\)/)?.[1] || ""
-                : "n"
-            }) {
-    // Your code here
-}`
-          : LANGUAGE_CONFIGS[language].starterTemplate,
+      starterCode: LANGUAGE_CONFIGS[language].starterTemplate,
     };
   };
 
