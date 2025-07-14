@@ -25,4 +25,4 @@
 
 ## 이미지
 <img width="760" height="751" alt="스크린샷 2025-07-14 23 10 09" src="https://github.com/user-attachments/assets/dbe58dd6-75cd-4676-8f68-c453792ea903" />
-<img width="1330" height="925" alt="스크린샷 2025-07-14 23 04 44" src="https://github.com/user-attachments/assets/e3a48487-f126-4fb1-afce-54b5a561a317" />
+<img width="1318" height="878" alt="스크린샷 2025-07-14 23 11 12" src="https://github.com/user-attachments/assets/91833df9-fbf1-4e2a-ac1f-1502fe65adc4" />
