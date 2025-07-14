@@ -37,13 +37,6 @@ export function ProblemDisplay({ problem }: ProblemDisplayProps) {
         </div>
 
         <div>
-          <h4 className="font-semibold mb-2">Function Signature</h4>
-          <code className="bg-muted px-2 py-1 rounded text-sm">
-            {problem.signature}
-          </code>
-        </div>
-
-        <div>
           <h4 className="font-semibold mb-2">Examples</h4>
           <div className="space-y-2">
             {problem.tests.slice(0, 2).map((test, index) => (
