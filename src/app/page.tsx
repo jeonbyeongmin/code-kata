@@ -6,7 +6,6 @@ import { CodingInterface } from "@/components/CodingInterface";
 import { Celebration } from "@/components/Celebration";
 import { Problem, UserProgress, ProgrammingLanguage } from "@/types";
 import { LocalStorageService } from "@/lib/storage";
-import { ProblemGeneratorService } from "@/lib/problemGenerator";
 import { LANGUAGE_CONFIGS } from "@/lib/languages";
 
 type AppState = "loading" | "language-selection" | "coding" | "celebration";
@@ -57,12 +56,23 @@ export default function Home() {
     setIsGeneratingProblem(true);
 
     try {
-      // For MVP, we'll use fallback problems since we need API key setup
-      const problemGenerator = new ProblemGeneratorService("");
-      const problem = await problemGenerator.generateProblem(
-        progress.currentDay,
-        progress.language
-      );
+      // API route를 통해 문제 생성
+      const response = await fetch("/api/problems", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          day: progress.currentDay,
+          language: progress.language,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate problem from API");
+      }
+
+      const { problem } = await response.json();
 
       setCurrentProblem(problem);
       LocalStorageService.saveCurrentProblem(problem);

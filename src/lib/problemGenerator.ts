@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Problem, ProgrammingLanguage, TestCase } from "@/types";
+import { Problem, ProgrammingLanguage } from "@/types";
 
 export class ProblemGeneratorService {
   private genAI: GoogleGenerativeAI;
@@ -12,7 +12,7 @@ export class ProblemGeneratorService {
     day: number,
     language: ProgrammingLanguage
   ): Promise<Problem> {
-    const model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = this.genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
 
     const difficultyLevel = this.getDifficultyLevel(day);
     const prompt = this.createPrompt(day, language, difficultyLevel);
@@ -75,6 +75,7 @@ Requirements:
 - The problem should be a single function
 - Include 4-6 test cases with diverse inputs
 - Function signature should be simple and clear
+- Function name should be "solution"
 - Problem should be solvable in 5-15 minutes
 - Focus on basic algorithms, math, or string manipulation
 

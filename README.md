@@ -34,14 +34,15 @@ cd code-kata
 npm install
 ```
 
-3. 환경 변수 설정 (선택사항)
+3. 환경 변수 설정
 
 ```bash
 cp .env.example .env.local
-# .env.local 파일에서 Gemini API 키 설정
+# .env.local 파일에서 Google AI API 키 설정
+# API 키는 https://makersuite.google.com/app/apikey 에서 발급 가능
 ```
 
-4. 개발 서버 실행
+1. 개발 서버 실행
 
 ```bash
 npm run dev

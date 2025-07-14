@@ -58,16 +58,21 @@ export class CodeExecutionService {
             const passed = JSON.stringify(result) === JSON.stringify(test.expected);
             testResults.push({ passed, input: test.input, expected: test.expected, actual: result });
           } catch (err) {
-            testResults.push({ passed: false, error: err.message });
+            testResults.push({ passed: false, error: err.message, input: tests[i].input, expected: tests[i].expected });
           }
         }
         
-        testResults;
+        return testResults;
       `;
 
       // Execute in isolated context
       const func = new Function(safeCode);
       const results = func();
+
+      // Validate results
+      if (!Array.isArray(results)) {
+        throw new Error("Test execution did not return expected results");
+      }
 
       const passedTests = results.filter(
         (r: TestExecutionResult) => r.passed
@@ -155,14 +160,21 @@ export class CodeExecutionService {
     error?: string;
   } {
     try {
-      // Basic syntax check
-      new Function(code);
+      // Basic syntax check - create a test function to validate
+      const testCode = `
+        ${code}
+        if (typeof solution !== 'function') {
+          throw new Error('solution must be a function');
+        }
+      `;
+      new Function(testCode);
 
       // Check if solution function is defined
       if (
         !code.includes("function solution") &&
         !code.includes("const solution") &&
-        !code.includes("let solution")
+        !code.includes("let solution") &&
+        !code.includes("solution =")
       ) {
         return { valid: false, error: 'Please define a "solution" function' };
       }
